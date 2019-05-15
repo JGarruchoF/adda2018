@@ -1,4 +1,4 @@
-package p2.PDR;
+package p2;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,11 +69,19 @@ public class SolucionProblema2 {
 	}
 	@Override
 	public String toString() {
-		return "Objetivo: " + DatosProblema2.objetivo+", solucion: "+ numeros + ", cantidad de numeros pares: " + cantidadNumPar;
+		return "Objetivo: " + p2.DatosProblema2.objetivo+", solucion: "+ numeros + ", cantidad de numeros pares: " + cantidadNumPar;
 	}
-	public void add(Integer num) {
+	public void add(Integer indice) {
+		Integer num = p2.DatosProblema2.lista.get(indice);
 		numeros.add(num);
 		if(num%2==0) cantidadNumPar++;
+	}
+	public void retrocede() {
+		numeros.remove(numeros.size()-1);
+	}
+	
+	public SolucionProblema2 copy() {
+		return SolucionProblema2.create(this.numeros, this.cantidadNumPar);
 	}
 	
 
