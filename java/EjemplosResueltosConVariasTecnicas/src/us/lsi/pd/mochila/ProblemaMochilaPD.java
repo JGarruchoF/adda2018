@@ -44,7 +44,7 @@ public class ProblemaMochilaPD implements ProblemaPDR<SolucionMochila, Integer, 
 	
 	@Override
 	public Tipo getTipo(){
-		return Tipo.Max;
+		return Tipo.Min;
 	}
 	
 	@Override

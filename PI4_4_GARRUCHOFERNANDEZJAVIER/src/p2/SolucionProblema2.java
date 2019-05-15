@@ -8,10 +8,9 @@ public class SolucionProblema2 {
 	private List<Integer> numeros;
 	private Double cantidadNumPar;
 	
-	private SolucionProblema2(List<Integer> numeros, Double cantidadNumPar) {
+	private SolucionProblema2(List<Integer> numeros) {
 		super();
 		this.numeros = numeros;
-		this.cantidadNumPar = cantidadNumPar;
 	}
 	private SolucionProblema2() {
 		super();
@@ -24,15 +23,15 @@ public class SolucionProblema2 {
 	}
 	
 	public static SolucionProblema2 create(List<Integer> numeros, Double cantidadNumPar) {
-		return new SolucionProblema2(numeros, cantidadNumPar);
+		return new SolucionProblema2(numeros);
 	}
 
 	public List<Integer> getNumeros() {
-		return numeros;
+		return new ArrayList<>(numeros);
 	}
 
 	public Double getCantidadNumPar() {
-		return cantidadNumPar;
+		return this.getNumeros().stream().mapToDouble(i->i%2==0?1.:0.).sum();
 	}
 
 
@@ -69,7 +68,7 @@ public class SolucionProblema2 {
 	}
 	@Override
 	public String toString() {
-		return "Objetivo: " + p2.DatosProblema2.objetivo+", solucion: "+ numeros + ", cantidad de numeros pares: " + cantidadNumPar;
+		return "Objetivo: " + p2.DatosProblema2.objetivo+", solucion: "+ numeros + ", cantidad de numeros pares: " + getCantidadNumPar();
 	}
 	public void add(Integer indice) {
 		Integer num = p2.DatosProblema2.lista.get(indice);
