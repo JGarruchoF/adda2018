@@ -1,10 +1,10 @@
-package p2.PDR;
+package ejercicio2.PDR;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import p2.DatosProblema2;
-import p2.SolucionProblema2;
+import ejercicio2.DatosProblema2;
+import ejercicio2.SolucionProblema2;
 import us.lsi.pd.AlgoritmoPD.Sp;
 import us.lsi.pd.AlgoritmoPD.Tipo;
 import us.lsi.pd.ProblemaPDR;
@@ -14,7 +14,6 @@ public class Problema2PDR implements ProblemaPDR<SolucionProblema2, Boolean, Pro
 	//PROPIEDADES
 	private Integer diferencia;
 	private Integer suma;
-	//Propiedades derivadas
 	private Double cantidadNumPar;
 	//indice
 	int indice;
@@ -50,23 +49,25 @@ public class Problema2PDR implements ProblemaPDR<SolucionProblema2, Boolean, Pro
 		this.cantidadNumPar = alternativa && num%2==0 ? problema.cantidadNumPar + 1 : problema.cantidadNumPar; 
 		this.indice = problema.indice + 1;
 
+		///////////////////
 		System.out.println(this);
 		System.out.println(esCasoBase());
 		if(esCasoBase())System.out.println(getObjetivo());
 		System.out.println();
+		///////////////////
 
 	}
 	@Override
 	public Tipo getTipo() {
-		return Tipo.Min;
+		return Tipo.Max;
 	}
 	@Override
 	public int size() {
-		return p2.DatosProblema2.lista.size()  - indice;
+		return ejercicio2.DatosProblema2.lista.size()  - indice;
 	}
 	@Override
 	public boolean esCasoBase() {
-		return indice == DatosProblema2.lista.size(); //|| diferencia == 0;
+		return indice == DatosProblema2.lista.size(); 
 	}
 	@Override
 	public Sp<Boolean> getSolucionParcialCasoBase() {
@@ -84,7 +85,7 @@ public class Problema2PDR implements ProblemaPDR<SolucionProblema2, Boolean, Pro
 	@Override
 	public List<Boolean> getAlternativas() { 
 		List<Boolean> res = new ArrayList<>();
-		Integer siguiente = p2.DatosProblema2.lista.get(indice);
+		Integer siguiente = ejercicio2.DatosProblema2.lista.get(indice);
 		if(diferencia >= siguiente) res.add(Boolean.TRUE);
 		res.add(Boolean.FALSE);
 		System.out.println(res);
@@ -103,7 +104,7 @@ public class Problema2PDR implements ProblemaPDR<SolucionProblema2, Boolean, Pro
 	@Override
 	public Double getObjetivo() {
 		Double r = null;
-		if(esCasoBase()) r = (double) cantidadNumPar - diferencia*1000;
+		if(esCasoBase()) r = cantidadNumPar - Math.abs(diferencia)*1000;
 		return r;
 	}
 	
@@ -111,6 +112,11 @@ public class Problema2PDR implements ProblemaPDR<SolucionProblema2, Boolean, Pro
 	public Double getObjetivoEstimado(Boolean alternativa) {	
 		//TODO
 		return null;
+	}
+	
+	@Override
+	public boolean estaFueraDeRango() {
+		return diferencia < 0;
 	}
 
 	public Integer getDiferencia() {

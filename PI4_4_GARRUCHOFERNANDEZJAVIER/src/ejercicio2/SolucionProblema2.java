@@ -1,4 +1,4 @@
-package p2;
+package ejercicio2;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,10 +68,10 @@ public class SolucionProblema2 {
 	}
 	@Override
 	public String toString() {
-		return "Objetivo: " + p2.DatosProblema2.objetivo+", solucion: "+ numeros + ", cantidad de numeros pares: " + getCantidadNumPar();
+		return "Objetivo: " + ejercicio2.DatosProblema2.objetivo+", solucion: "+ numeros + ", cantidad de numeros pares: " + getCantidadNumPar();
 	}
 	public void add(Integer indice) {
-		Integer num = p2.DatosProblema2.lista.get(indice);
+		Integer num = ejercicio2.DatosProblema2.lista.get(indice);
 		numeros.add(num);
 		if(num%2==0) cantidadNumPar++;
 	}

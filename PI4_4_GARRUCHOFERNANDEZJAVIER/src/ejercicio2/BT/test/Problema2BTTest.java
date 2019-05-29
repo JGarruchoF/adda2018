@@ -1,18 +1,24 @@
-package p2.BT.test;
+package ejercicio2.BT.test;
 
 import java.util.Arrays;
+import java.util.List;
 
-import p2.SolucionProblema2;
-import p2.BT.Problema2BT;
+import ejercicio2.SolucionProblema2;
+import ejercicio2.BT.Problema2BT;
 import us.lsi.bt.AlgoritmoBT;
 
 public class Problema2BTTest {
 
 	public static void main(String[] args) {
 		
-		p2.DatosProblema2.objetivo = 4;
-		p2.DatosProblema2.lista.addAll(Arrays.asList(3, 2, 1));
+		ejercicio2.DatosProblema2.objetivo = 10;
+		List<Integer> nums = Arrays.asList(1,2,3, 2, 8);
+		ejercicio2.DatosProblema2.lista = nums;
+		
 		AlgoritmoBT.metricasOK = true;
+		AlgoritmoBT.conFiltro = false;
+		AlgoritmoBT.isRandomize = false;
+	
 		Problema2BT p = Problema2BT.createInitial();
 		AlgoritmoBT<SolucionProblema2, Boolean, Problema2BT> a = AlgoritmoBT.create(p);
 		a.ejecuta();
