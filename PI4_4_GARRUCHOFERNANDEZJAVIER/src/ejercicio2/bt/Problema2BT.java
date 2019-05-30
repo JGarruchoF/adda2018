@@ -1,4 +1,4 @@
-package ejercicio2.BT;
+package ejercicio2.bt;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +30,7 @@ public class Problema2BT implements EstadoBT<SolucionProblema2, Boolean, Problem
 
 	@Override
 	public Tipo getTipo() {
-		return Tipo.Max;
+		return Tipo.Min;
 	}
 
 	@Override
@@ -44,14 +44,15 @@ public class Problema2BT implements EstadoBT<SolucionProblema2, Boolean, Problem
 		Integer num = ejercicio2.DatosProblema2.lista.get(indice);
 		
 		if(a)this.solP.add(indice);
-		this.cantidadNumPar = num%2 == 0 && a ? ++cantidadNumPar : cantidadNumPar;
-		this.suma = a? this.suma+num : this.suma;
+		this.cantidadNumPar = a && num%2 == 0  ? ++cantidadNumPar : cantidadNumPar;
+		this.suma = a ? this.suma+num : this.suma;
 		this.diferencia =  DatosProblema2.objetivo - suma;
 		this.indice = this.indice + 1;
 		
 		/////////////
 		System.out.println(this);
 		System.out.println(esCasoBase());
+		if(esCasoBase()) System.out.println("obj: "+this.getObjetivo());
 		/////////////
 		
 		return this;
@@ -60,8 +61,7 @@ public class Problema2BT implements EstadoBT<SolucionProblema2, Boolean, Problem
 	@Override
 	public Problema2BT retrocede(Boolean a) {
 		this.indice = this.indice - 1;
-		Integer num = ejercicio2.DatosProblema2.lista.get(indice);
-		
+		Integer num = ejercicio2.DatosProblema2.lista.get(indice);	
 		this.suma = a?this.suma - num : this.suma;
 		this.diferencia =  DatosProblema2.objetivo - suma;
 		this.cantidadNumPar  = num%2==0 && a? --cantidadNumPar : cantidadNumPar;
@@ -83,7 +83,6 @@ public class Problema2BT implements EstadoBT<SolucionProblema2, Boolean, Problem
 	@Override
 	public List<Boolean> getAlternativas() {
 		List<Boolean> alternativas = new ArrayList<>();
-		
 		if(diferencia >= ejercicio2.DatosProblema2.lista.get(indice)) alternativas.add(Boolean.TRUE);
 		alternativas.add(Boolean.FALSE);
 		System.out.println(alternativas);
@@ -92,11 +91,7 @@ public class Problema2BT implements EstadoBT<SolucionProblema2, Boolean, Problem
 	
 	@Override
 	public Double getObjetivo() {
-		Double res = (double) this.cantidadNumPar -Math.abs( diferencia*1000);
-		//////////////////////
-		System.out.println("obj: "+res);
-		//////////////////////
-		return res;
+		return this.cantidadNumPar; //- Math.abs( diferencia*1000);;
 	}	
 	
 	@Override

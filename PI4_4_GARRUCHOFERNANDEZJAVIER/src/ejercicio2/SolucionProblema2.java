@@ -8,9 +8,10 @@ public class SolucionProblema2 {
 	private List<Integer> numeros;
 	private Double cantidadNumPar;
 	
-	private SolucionProblema2(List<Integer> numeros) {
+	private SolucionProblema2(List<Integer> numeros, Double cantidadNumPar) {
 		super();
 		this.numeros = numeros;
+		this.cantidadNumPar = cantidadNumPar;
 	}
 	private SolucionProblema2() {
 		super();
@@ -23,7 +24,7 @@ public class SolucionProblema2 {
 	}
 	
 	public static SolucionProblema2 create(List<Integer> numeros, Double cantidadNumPar) {
-		return new SolucionProblema2(numeros);
+		return new SolucionProblema2(numeros, cantidadNumPar);
 	}
 
 	public List<Integer> getNumeros() {

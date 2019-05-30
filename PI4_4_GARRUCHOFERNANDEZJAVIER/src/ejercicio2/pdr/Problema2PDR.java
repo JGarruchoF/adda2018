@@ -1,4 +1,4 @@
-package ejercicio2.PDR;
+package ejercicio2.pdr;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,7 +63,7 @@ public class Problema2PDR implements ProblemaPDR<SolucionProblema2, Boolean, Pro
 	}
 	@Override
 	public int size() {
-		return ejercicio2.DatosProblema2.lista.size()  - indice;
+		return ejercicio2.DatosProblema2.lista.size() - indice;
 	}
 	@Override
 	public boolean esCasoBase() {

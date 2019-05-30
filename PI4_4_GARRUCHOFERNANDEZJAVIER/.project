@@ -3,7 +3,6 @@
 	<name>PI4_4_GARRUCHOFERNANDEZJAVIER</name>
 	<comment></comment>
 	<projects>
-		<project>ParteComun</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
