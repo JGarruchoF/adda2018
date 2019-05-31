@@ -41,7 +41,6 @@ public class Problema3PD implements ProblemaPD<List<List<Punto>>, Recta, Problem
 
 	@Override
 	public Sp<Recta> getSolucionParcialCasoBase() {
-		//return Sp.create(Recta.create(Punto.create(0.0, 0.0), Punto.create(0.0, 0.0)), 0.); 
 		return Sp.create(null, 0.);
 	}
 
@@ -98,7 +97,8 @@ public class Problema3PD implements ProblemaPD<List<List<Punto>>, Recta, Problem
 	}
 
 	@Override
-	public List<List<Punto>> getSolucionReconstruidaCasoBase(Sp<Recta> sp) {	//en el caso base la solucion son los 3 puntos que forman el triangulo
+	public List<List<Punto>> getSolucionReconstruidaCasoBase(Sp<Recta> sp) {	
+		//en el caso base la solucion son los 3 puntos que forman el triangulo
 		List<List<Punto>> res = new ArrayList<>();
 		res.add(this.puntos);
 		return res;
@@ -107,17 +107,39 @@ public class Problema3PD implements ProblemaPD<List<List<Punto>>, Recta, Problem
 	@Override
 	public List<List<Punto>> getSolucionReconstruidaCasoRecursivo(Sp<Recta> sp, List<List<List<Punto>>> ls) {
 		
-
 		List<List<Punto>> res = new ArrayList<>();
-		res.add(this.puntos);
-		for(List<List<Punto>> sol : ls) { //ERROR: sol siempre null
-			////
-			System.out.println(sol);
-			if(sol!=null)
-			////
+		for(List<List<Punto>> sol : ls) { 
+		
 			res.addAll(sol);
 		}
 		return res;
+	}
+	
+	
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((puntos == null) ? 0 : puntos.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Problema3PD other = (Problema3PD) obj;
+		if (puntos == null) {
+			if (other.puntos != null)
+				return false;
+		} else if (!puntos.equals(other.puntos))
+			return false;
+		return true;
 	}
 
 	@Override
