@@ -35,7 +35,6 @@ public class SolucionProblema2 {
 		return this.getNumeros().stream().mapToDouble(i->i%2==0?1.:0.).sum();
 	}
 
-
 	
 
 	@Override
@@ -71,8 +70,7 @@ public class SolucionProblema2 {
 	public String toString() {
 		return "Objetivo: " + ejercicio2.DatosProblema2.objetivo+", solucion: "+ numeros + ", cantidad de numeros pares: " + getCantidadNumPar();
 	}
-	public void add(Integer indice) {
-		Integer num = ejercicio2.DatosProblema2.lista.get(indice);
+	public void add(Integer num) {;
 		numeros.add(num);
 		if(num%2==0) cantidadNumPar++;
 	}

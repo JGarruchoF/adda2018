@@ -27,32 +27,32 @@ public class Problema2PDR implements ProblemaPDR<SolucionProblema2, Boolean, Pro
 		return new Problema2PDR(problema, alternativa);
 	}
 
-	private Problema2PDR(Integer suma, int indice, Double cantidadNumPar) {
+	private Problema2PDR(int indice, Integer suma, Double cantidadNumPar) {
 		super();
 		this.suma = suma;
 		this.indice = indice;
 		this.diferencia = DatosProblema2.objetivo - suma;
 		this.cantidadNumPar = cantidadNumPar;
+		////
 		System.out.println(this);
 		System.out.println(esCasoBase());
 		if(esCasoBase())System.out.println(getObjetivo());
 		System.out.println();
+		////
 	}
 
 
 	private Problema2PDR(Problema2PDR problema, Boolean alternativa) {
 		super();
-		this.indice = problema.indice;
-		Integer num = DatosProblema2.lista.get(indice);
+		Integer num = DatosProblema2.lista.get(problema.getIndice());
 		this.suma = alternativa?problema.suma + num : problema.suma;
 		this.diferencia = DatosProblema2.objetivo - suma;
 		this.cantidadNumPar = alternativa && num%2==0 ? problema.cantidadNumPar + 1 : problema.cantidadNumPar; 
-		this.indice = problema.indice + 1;
+		this.indice = problema.getIndice() + 1;
 
 		///////////////////
 		System.out.println(this);
 		System.out.println(esCasoBase());
-		if(esCasoBase())System.out.println(getObjetivo());
 		System.out.println();
 		///////////////////
 
@@ -71,6 +71,7 @@ public class Problema2PDR implements ProblemaPDR<SolucionProblema2, Boolean, Pro
 	}
 	@Override
 	public Sp<Boolean> getSolucionParcialCasoBase() {
+		if(diferencia!=0) return null;
 		return Sp.create(null, 0.);
 	}
 	@Override
@@ -79,8 +80,10 @@ public class Problema2PDR implements ProblemaPDR<SolucionProblema2, Boolean, Pro
 	}
 	@Override
 	public Sp<Boolean> getSolucionParcialPorAlternativa(Boolean alternativa, Sp<Boolean> sol) {
-		return Sp.create(alternativa,  
-				alternativa && DatosProblema2.lista.get(indice)%2==0? sol.propiedad+1 : sol.propiedad);
+		Double valor = alternativa && DatosProblema2.lista.get(indice)%2==0? sol.propiedad+1 : sol.propiedad;
+		if(esCasoBase() && diferencia!=0) valor = 0.;
+		Sp<Boolean> res = Sp.create(alternativa,valor);
+		return res;
 	}
 	@Override
 	public List<Boolean> getAlternativas() { 
@@ -97,15 +100,15 @@ public class Problema2PDR implements ProblemaPDR<SolucionProblema2, Boolean, Pro
 	}
 	@Override
 	public SolucionProblema2 getSolucionReconstruidaCasoRecursivo(Sp<Boolean> sp, SolucionProblema2 sol) {
-		if(sp.alternativa) sol.add(indice);
+		Integer num = ejercicio2.DatosProblema2.lista.get(indice);
+		if(sp.alternativa) sol.add(num);
 		return sol;
 	}
 	
 	@Override
 	public Double getObjetivo() {
-		Double r = null;
-		if(esCasoBase()) r = cantidadNumPar - Math.abs(diferencia)*1000;
-		return r;
+		//TODO
+		return null;
 	}
 	
 	@Override
