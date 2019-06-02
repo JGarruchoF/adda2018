@@ -19,13 +19,11 @@ public class Problema2GVTest {
 	
 	AStarGraph<Problema2Vertice,Problema2Arista> graph = AStarSimpleVirtualGraph.of(x->x.getEdgeWeight());
 	Problema2Vertice startVertex = Problema2Vertice.of(0, 0., 0, DatosProblema2.objetivo);
-	Predicate<Problema2Vertice> goal = (Problema2Vertice v)->v.getIndice()==DatosProblema2.lista.size();
+	Predicate<Problema2Vertice> goal = (Problema2Vertice v)-> v.getIndice()>=DatosProblema2.lista.size(); 
 	AStarAlgorithm<Problema2Vertice,Problema2Arista> a = AStarAlgorithm.of(graph, startVertex, goal, null);
-	Problema2Vertice endVertex = Problema2Vertice.of(5, 2., 10, DatosProblema2.objetivo);
-			
-	//AStarAlgorithm<Problema2Vertice,Problema2Arista> a = AStarAlgorithm.of(graph, startVertex, endVertex, null);
-	
+
 	List<Problema2Arista> aristas = a.getPath().getEdgeList();
+	
 	SolucionProblema2 s = Problema2Vertice.getSolucion(aristas);
 	System.out.println(s);
 	}

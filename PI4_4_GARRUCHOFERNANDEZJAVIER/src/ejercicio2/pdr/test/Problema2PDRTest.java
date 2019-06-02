@@ -10,7 +10,7 @@ public class Problema2PDRTest {
 	public static void main(String[] args) {
 		
 		AlgoritmoPD.isRandomize = false;
-		AlgoritmoPD.conFiltro = false;
+		AlgoritmoPD.conFiltro = false; //En este problema el filtro implementado aumenta el tiempo de ejecucion
 		AlgoritmoPD.metricasOK = true;
 		
 		Problema2PDR p = Problema2PDR.createInitial();

@@ -27,9 +27,6 @@ public class Problema2Vertice extends ActionVirtualVertex<Problema2Vertice, Prob
 		this.suma = suma;
 		this.diferencia = diferencia;
 		
-		///
-		System.out.println(this);
-		///
 		
 	}
 
@@ -40,9 +37,10 @@ public class Problema2Vertice extends ActionVirtualVertex<Problema2Vertice, Prob
 
 	@Override
 	protected List<Boolean> actions() {
-		List<Boolean> res = new ArrayList<>();
-		if(diferencia >= DatosProblema2.lista.get(indice)) res.add(Boolean.TRUE);
-		if(diferencia > 0) res.add(Boolean.FALSE);
+		List<Boolean> res = new ArrayList<>(); 
+			if(diferencia >= DatosProblema2.lista.get(indice)) res.add(Boolean.TRUE);
+			if(diferencia > 0) res.add(Boolean.FALSE);
+		
 		return res;
 	}
 
@@ -81,10 +79,13 @@ public class Problema2Vertice extends ActionVirtualVertex<Problema2Vertice, Prob
 		return diferencia;
 	}
 
-	public static SolucionProblema2 getSolucion(List<Problema2Arista> aristas) {
-		List<Integer> numeros = aristas.stream().filter(a->a.alternativa).map(a->DatosProblema2.lista.get(a.getSource().getIndice())).collect(Collectors.toList());
-		Double cantidadNumPar = numeros.stream().mapToDouble(n->n%2==0? 1:0).sum();
-		return SolucionProblema2.create(numeros, cantidadNumPar);
+	public static  SolucionProblema2 getSolucion(List<Problema2Arista> aristas) {
+		SolucionProblema2 res = null;
+		List<Integer> numeros = aristas.stream().filter(a->a.alternativa)
+				.map(a->DatosProblema2.lista.get(a.getSource().getIndice())).collect(Collectors.toList());
+		Boolean esValida = aristas.get(aristas.size()-1).getTarget().getDiferencia()==0;
+		if(esValida) res = SolucionProblema2.create(numeros);
+		return res;
 	}
 
 	@Override

@@ -63,7 +63,6 @@ public class Problema3PD implements ProblemaPD<List<List<Punto>>, Recta, Problem
 
 	@Override
 	public Sp<Recta> getSolucionParcialPorAlternativa(Recta a, List<Sp<Recta>> ls) {	
-		
 		Double propiedad = 0.;
 		for(Sp<Recta> sp : ls) {
 			if(sp.alternativa!=null)
@@ -114,7 +113,6 @@ public class Problema3PD implements ProblemaPD<List<List<Punto>>, Recta, Problem
 		}
 		return res;
 	}
-	
 	
 
 	@Override

@@ -9,11 +9,14 @@ import us.lsi.bt.EstadoBT;
 
 public class Problema2BT implements EstadoBT<SolucionProblema2, Boolean, Problema2BT>{
 	
+	
 	private int indice;
 	private SolucionProblema2 solP;
 	private Double cantidadNumPar;
 	private Integer suma;
 	private Integer diferencia;
+	
+	List<Boolean> camino; //Almacena la lista de alternativas que se ha ido tomando
 	
 	private Problema2BT(int indice, SolucionProblema2 solP, Double cantidadNumPar, Integer suma, Integer diferencia) {
 		super();
@@ -22,6 +25,7 @@ public class Problema2BT implements EstadoBT<SolucionProblema2, Boolean, Problem
 		this.cantidadNumPar = cantidadNumPar;
 		this.suma = suma;
 		this.diferencia = diferencia;
+		this.camino = new ArrayList<>();
 	}
 	
 	public static Problema2BT createInitial() {
@@ -30,7 +34,7 @@ public class Problema2BT implements EstadoBT<SolucionProblema2, Boolean, Problem
 
 	@Override
 	public Tipo getTipo() {
-		return Tipo.Min;
+		return Tipo.Max;
 	}
 
 	@Override
@@ -41,25 +45,21 @@ public class Problema2BT implements EstadoBT<SolucionProblema2, Boolean, Problem
 	@Override
 	public Problema2BT avanza(Boolean a) {
 		
+		camino.add(a);
+		
 		Integer num = ejercicio2.DatosProblema2.lista.get(indice);
 		
-		if(a)this.solP.add(indice);
+		if(a) this.solP.add(num);
 		this.cantidadNumPar = a && num%2 == 0  ? ++cantidadNumPar : cantidadNumPar;
 		this.suma = a ? this.suma+num : this.suma;
 		this.diferencia =  DatosProblema2.objetivo - suma;
 		this.indice = this.indice + 1;
-		
-		/////////////
-		System.out.println(this);
-		System.out.println(esCasoBase());
-		if(esCasoBase()) System.out.println("obj: "+this.getObjetivo());
-		/////////////
-		
 		return this;
 	}
 
 	@Override
 	public Problema2BT retrocede(Boolean a) {
+		camino.remove(camino.size()-1);
 		this.indice = this.indice - 1;
 		Integer num = ejercicio2.DatosProblema2.lista.get(indice);	
 		this.suma = a?this.suma - num : this.suma;
@@ -77,27 +77,29 @@ public class Problema2BT implements EstadoBT<SolucionProblema2, Boolean, Problem
 
 	@Override
 	public boolean esCasoBase() {
-		return size() == 0;
+		return size() == 0 || diferencia==0;
 	}
 
 	@Override
 	public List<Boolean> getAlternativas() {
 		List<Boolean> alternativas = new ArrayList<>();
-		if(diferencia >= ejercicio2.DatosProblema2.lista.get(indice)) alternativas.add(Boolean.TRUE);
-		alternativas.add(Boolean.FALSE);
-		System.out.println(alternativas);
+		if(diferencia >= ejercicio2.DatosProblema2.lista.get(indice)) alternativas.add(Boolean.TRUE);	
+		if(!esCasoBase()) alternativas.add(Boolean.FALSE);
 		return alternativas;
 	}
 	
 	@Override
 	public Double getObjetivo() {
-		return this.cantidadNumPar; //- Math.abs( diferencia*1000);;
+		return this.cantidadNumPar;
 	}	
 	
 	@Override
-	public Double getObjetivoEstimado(Boolean alternativa) {	
-		//TODO
-		return null;
+	public Double getObjetivoEstimado(Boolean alternativa) {
+		Double paresEstimado = cantidadNumPar;
+		for(int i = indice; i < DatosProblema2.lista.size(); i++) {
+			if(DatosProblema2.lista.get(i)%2==0) paresEstimado++;
+		}
+		return paresEstimado;
 	}
 	
 	@Override
@@ -107,15 +109,22 @@ public class Problema2BT implements EstadoBT<SolucionProblema2, Boolean, Problem
 	
 	@Override
 	public SolucionProblema2 getSolucion() {
-		return this.solP.copy();
+		SolucionProblema2 res = null;
+		List<Integer> numeros = new ArrayList<>();
+		Integer suma = 0;
+		for(int i = 0; i<camino.size(); i++) {
+			if(camino.get(i)) {
+				Integer num = DatosProblema2.lista.get(i);
+				suma += num;
+				numeros.add(num);
+			}
+		}
+		if(suma == DatosProblema2.objetivo) res = SolucionProblema2.create(numeros);
+		return res;
 	}
 
 	public int getIndice() {
 		return indice;
-	}
-
-	public SolucionProblema2 getSolP() {
-		return solP;
 	}
 
 	public Double getCantidadNumPar() {

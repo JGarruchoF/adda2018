@@ -15,7 +15,7 @@ public class Problema2PDR implements ProblemaPDR<SolucionProblema2, Boolean, Pro
 	private Integer diferencia;
 	private Integer suma;
 	private Double cantidadNumPar;
-	//indice
+
 	int indice;
 	
 	
@@ -33,12 +33,6 @@ public class Problema2PDR implements ProblemaPDR<SolucionProblema2, Boolean, Pro
 		this.indice = indice;
 		this.diferencia = DatosProblema2.objetivo - suma;
 		this.cantidadNumPar = cantidadNumPar;
-		////
-		System.out.println(this);
-		System.out.println(esCasoBase());
-		if(esCasoBase())System.out.println(getObjetivo());
-		System.out.println();
-		////
 	}
 
 
@@ -49,13 +43,6 @@ public class Problema2PDR implements ProblemaPDR<SolucionProblema2, Boolean, Pro
 		this.diferencia = DatosProblema2.objetivo - suma;
 		this.cantidadNumPar = alternativa && num%2==0 ? problema.cantidadNumPar + 1 : problema.cantidadNumPar; 
 		this.indice = problema.getIndice() + 1;
-
-		///////////////////
-		System.out.println(this);
-		System.out.println(esCasoBase());
-		System.out.println();
-		///////////////////
-
 	}
 	@Override
 	public Tipo getTipo() {
@@ -91,7 +78,6 @@ public class Problema2PDR implements ProblemaPDR<SolucionProblema2, Boolean, Pro
 		Integer siguiente = ejercicio2.DatosProblema2.lista.get(indice);
 		if(diferencia >= siguiente) res.add(Boolean.TRUE);
 		res.add(Boolean.FALSE);
-		System.out.println(res);
 		return res;
 	}
 	@Override
@@ -104,17 +90,13 @@ public class Problema2PDR implements ProblemaPDR<SolucionProblema2, Boolean, Pro
 		if(sp.alternativa) sol.add(num);
 		return sol;
 	}
-	
 	@Override
-	public Double getObjetivo() {
-		//TODO
-		return null;
-	}
-	
-	@Override
-	public Double getObjetivoEstimado(Boolean alternativa) {	
-		//TODO
-		return null;
+	public Double getObjetivoEstimado(Boolean alternativa) {
+		Double paresEstimado = cantidadNumPar;
+		for(int i = indice; i < DatosProblema2.lista.size(); i++) {
+			if(DatosProblema2.lista.get(i)%2==0) paresEstimado++;
+		}
+		return paresEstimado;
 	}
 	
 	@Override
